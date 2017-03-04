@@ -1,0 +1,1015 @@
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
+@import 'bourbon'; // http://bourbon.io/
+@import '../partials/variables'; 
+@import '../partials/mixins'; 
+@import '../partials/layout'; 
+
+
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+.autocomplete-suggestion {
+	background-color: #0D7377;
+    color: white;
+}
+
+.autocomplete-suggestions {
+  display: none;
+}
+
+#autocomplete {
+  border: none;
+}
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: #14FFEC;
+	background-color: darken($color-2, 10%);
+}
+
+h1,h2,h3 {
+	font:{
+		family: 'Roboto Condensed';
+	}
+}
+
+h4 {
+	color: $color-3;
+}
+
+svg {
+	max-width: 100%;
+}
+
+a {
+	text-decoration: none;
+	font-family: $primary-font;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+#logo-stars {
+	opacity: .3;
+	width: 90vw;
+}
+
+.cd-nav-trigger {
+	/* hamburger icon */
+	position: fixed;
+	z-index: 3;
+	top: 12px;
+	right: 5%;
+	height: 44px;
+	width: 44px;
+	
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+
+	transition: (transform 0.2s);
+
+#loginButton {
+	@extend .cd-nav-trigger;
+}
+
+	span {
+		/* icon created in CSS */
+		position: absolute;
+		@include center; // mixin inside partials > _mixins.scss
+		width: 32px;
+		height: 3px;
+		background-color: darken($color-7, 10%);
+
+		&::before, &:after {
+			/* upper and lower lines of the menu icon */
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%; 
+			background-color: inherit;
+
+			/* Force Hardware Acceleration in WebKit */
+			@include transform(translateZ(0));
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+
+			@include transition(transform 0.2s, width 0.2s);
+		}
+
+		&::before {
+			@include transform-origin(right top);
+			@include transform(translateY(-10px));
+		}
+
+		&::after {
+			@include transform-origin(right bottom);
+			@include transform(translateY(10px));
+		}
+
+	}
+
+	.no-touch &:hover {
+		/* rotate trigger on hover */
+		@include transform(rotate(180deg));
+
+		span::after, 
+		span::before {
+			/* animate arrow --> from hamburger to arrow */
+			width: 50%;
+		}
+
+		span::before {
+			@include transform(translateX(1px) translateY(1px) rotate(45deg));
+		}
+
+		span::after {
+			@include transform(translateX(1px) translateY(-1px) rotate(-45deg));
+		}
+	}  
+
+	@include MQ(L) {
+		top: 38px;
+	}
+}
+
+.nc-icon {
+	color: $color-1;
+}
+
+
+
+/* -------------------------------- 
+
+xnavigation 
+
+-------------------------------- */
+.mini-header {
+		background-color: $color-2;
+		height: 3em;
+		padding: -3em;
+		h2 {
+			color: white;
+		}
+	}
+
+
+.cd-nav-container {
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #ffffff;
+    /* Force Hardware Acceleration in WebKit */
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+    -webkit-transition: -webkit-transform 0.4s 0s, box-shadow 0s 0.4s;
+    -moz-transition: -moz-transform 0.4s 0s, box-shadow 0s 0.4s;
+    transition: transform 0.4s 0s, box-shadow 0s 0.4s;
+}
+.cd-nav-container.is-visible {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-overflow-scrolling: touch;
+    box-shadow: -4px 0 30px rgba(0, 0, 0, 0.2);
+    -webkit-transition: -webkit-transform 0.4s 0s, box-shadow 0s 0s;
+    -moz-transition: -moz-transform 0.4s 0s, box-shadow 0s 0s;
+    transition: transform 0.4s 0s, box-shadow 0s 0s;
+}
+
+	header {
+		
+		height: 68px;
+		position: relative;
+	}
+
+	
+	.nav-mini-links {
+		padding: 1em;
+		display: inline-block;
+	}
+
+	h3 {
+		font: {
+			size: 1.6rem;
+			weight: bold;
+			family: $secondary-font;
+		}
+		text-transform: uppercase;
+		color: $color-2;
+	}
+
+	@include MQ(M) {
+		width: 70%;
+		
+		header {
+			height: 116px;
+			padding-top: 3em;
+		}
+	}
+
+
+.cd-close-nav {
+	/* 'X' close icon */
+	position: absolute;
+	height: 44px;
+	width: 44px;
+	/* set the right position value so that it overlaps the .cd-nav-trigger*/
+	right: 6.25%;
+	@include center(y);
+	
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+
+	@include transition(opacity .2s);
+
+	&::after, 
+	&::before {
+		/* lines of 'X' icon */
+		content: '';
+		position: absolute;
+		height: 3px;
+		width: 32px;
+		left: 50%;
+    	top: 50%;
+		background-color: $color-2;	
+		@include backface-visibility(hidden);
+	}
+
+	&::after {
+		@include transform(translateX(-50%) translateY(-50%) rotate(45deg));
+	}
+
+	&::before {
+		@include transform(translateX(-50%) translateY(-50%) rotate(-45deg));
+	}
+
+	.no-touch &:hover {
+		opacity: .8;
+	}
+
+	@include MQ(M) {
+		right: 7.14%;
+	}
+}
+
+.cd-nav {
+	@include clearfix;
+	background-color: darken($color-7, 5%);
+
+	li {
+		@include column(.5);
+		/* 68px is the navigation header height  and the menu items will be allocated in 3 rows */
+		height: calc((100vh - 68px)/3);
+		min-height: 120px;
+		border: 1px solid $color-7;
+		border-top: none;
+		border-left: none;
+
+		&:nth-of-type(2n) {
+			border-right-width: 0;
+		}
+	}
+
+	a {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		@include transition(background-color .2s);
+
+		.no-touch &:hover svg {
+			@include animation(cd-shock .3s);
+		}
+	}
+
+
+	.no-touch & li a:hover, 
+	li.cd-selected a {
+		span * {
+			/* on hover or if selected - change text and icon color*/
+			stroke: $color-7;
+		}
+
+		em {
+			/* on hover or if selected - change text and icon color*/
+			color: $color-7;
+		}
+	}
+
+	#Capa_1:hover {
+		fill: white;
+	}
+
+	.no-touch & li:first-of-type a:hover,
+	li.cd-selected:first-of-type a {
+		/* on hover or if selected - change background color*/
+		background-color: $color-2;
+	}
+
+
+
+	.no-touch & li:nth-of-type(2) a:hover,
+	li.cd-selected:nth-of-type(2) a {
+		/* on hover or if selected - change background color*/
+		background-color: $color-2;
+	}
+
+	.no-touch & li:nth-of-type(3) a:hover,
+	li.cd-selected:nth-of-type(3) a {
+		/* on hover or if selected - change background color*/
+		background-color: $color-2;
+	}
+
+	.no-touch & li:nth-of-type(4) a:hover,
+	li.cd-selected:nth-of-type(4) a {
+		/* on hover or if selected - change background color*/
+		background-color: $color-2;
+	}
+
+	.no-touch & li:nth-of-type(5) a:hover,
+	li.cd-selected:nth-of-type(5) a {
+		/* on hover or if selected - change background color*/
+		background-color: $color-2;
+	}
+
+	.no-touch & li:nth-of-type(6) a:hover,
+	li.cd-selected:nth-of-type(6) a {
+		/* on hover or if selected - change background color*/
+		background-color: $color-2;
+	}
+
+	span, em {
+		position: absolute;
+	}
+
+	span {
+		top: calc(50% - 48px);
+		left: 50%;
+		@include transform(translateX(-50%));
+		height: 48px;
+		width: 48px;
+		
+		* {
+			@include transition(stroke .2s);
+		}
+	}
+
+	em {
+		width: 100%;
+		left: 0;
+		top: calc(50% + 15px);
+		color: $color-2;
+		@include transition(color .2s);
+		@include backface-visibility(hidden);
+	}
+
+
+	@include MQ(M) {
+		
+		li {
+			/* 116px is the navigation header height and the menu items will be allocated in 3 rows */
+			height: calc((100vh - 116px)/3);
+			min-height: 200px;
+		}
+
+		span {
+			height: 64px;
+			width: 64px;
+			top: calc(50% - 56px);
+		}
+
+		em {
+			font-size: 2.2rem;
+			font-weight: 300;
+			top: calc(50% + 21px);
+		}
+	}
+
+	@include MQ(L) {
+		
+		li {
+			@include column(.3333);
+			/* 116px is the navigation header height  and the menu items will be allocated in 2 rows */
+			height: calc((100vh - 116px)/2);
+			min-height: 250px;
+
+			&:nth-of-type(2n) {
+				border-right-width: 1px;
+			}
+			
+			&:nth-of-type(3n) {
+				border-right-width: 0;
+			}
+		}
+
+		em {
+			font-size: 2.5rem;
+		}
+	}
+}
+
+@include keyframes(cd-shock) {
+	0% {
+    	@include transform(rotate(0));
+  	}
+
+  	30% {
+    	@include transform(rotate(10deg));
+  	}
+
+  	60% {
+   		@include transform(rotate(-10deg));
+  	}
+
+  	100% {
+     	@include transform(rotate(0));
+  	}
+}
+
+/* -------------------------------- 
+
+xshadow layer 
+
+-------------------------------- */
+
+.cd-overlay {
+	/* shadow layer visible when navigation is open */
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+	background-color: rgba(#000, .55);
+	visibility: hidden;
+	opacity: 0;
+	@include backface-visibility(hidden);
+	@include transition(opacity $animation-duration 0s, visibility 0s $animation-duration);
+	
+	&.is-visible {
+		opacity: 1;
+		visibility: visible;
+		@include transition(opacity $animation-duration 0s, visibility 0s 0s);
+	}
+}
+
+/* -------------------------------- 
+
+xcontent 
+
+-------------------------------- */
+
+main {
+	position: relative;
+	height: 100vh;
+	overflow-x: hidden;
+	@include transition(transform $animation-duration);
+	box-shadow: 0 0 30px darken($color-2, 20%);
+
+	&.scale-down {
+		@include transform(scale(.9));
+	}
+}
+
+#intro-text {
+	margin: 2em;
+	line-height: 1.2em;
+	font:{
+		size: .9em;
+		font-family: 'Open Sans';
+	}
+}
+
+.cd-section {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	overflow-y: auto;
+	@include transform(translateX(100%));
+	@include transition(transform 0s $animation-duration);
+
+	&.cd-selected {
+		position: relative;
+		z-index: 2;
+		@include transform(translateX(0));
+		@include transition(transform $animation-duration 0s);
+		-webkit-overflow-scrolling: touch;
+	}
+
+
+	header {
+		height: 100%;
+		padding-top: 5%;
+		background: $color-1;
+		position: relative;
+	}
+
+	&.audit header {
+		background-image: url(../images/innovation.png);
+		background-repeat: no-repeat;
+		background-size:  100vw;
+		background-position: center;
+	}
+
+	&.projects header {
+		background-image: url(../images/realestate.png);
+		background-repeat: no-repeat;
+		background-size:  100vw;
+		background-position: center;
+	}
+
+	&.about header {
+		background-image: url(../images/maps.png);
+		background-repeat: no-repeat;
+		background-size:  100vw;
+		background-position: center;
+	}
+
+	&.services header {
+		background-image: url(../images/money.png);
+		background-repeat: no-repeat;
+		background-size:  100vw;
+		background-position: center;
+	}
+
+	&.careers header {
+		background-image: url(../images/public.png);
+		background-repeat: no-repeat;
+		background-size:  100vw;
+		background-position: center;
+	}
+
+	&.contact header {
+		background-image: url(../images/storage.png);
+		background-repeat: no-repeat;
+		background-size:  100vw;
+		height: 100%;
+		background-position: center;
+	}
+
+	@include MQ(M) {
+		/* not 100vh to fix a small bug --> border visible otherwise */
+		header: 102vh;
+	}
+}
+
+.cd-title {
+	position: relative;
+	top: 38%;
+	@include transform(translateY(-50%));
+	color: $color-7;
+	text-align: center;
+	
+	> * {
+		text-shadow: 0 1px 2px rgba(#000, .05);
+		@include font-smoothing;
+	}
+
+	h2 {
+		font-size: 2.8rem;
+		margin-bottom: .8em;
+	}
+
+	a {
+		display: inline-block;
+		padding: 1.2em 1.6em;
+		border-radius: 0;
+		border: 2px solid rgba($color-7, .5);
+		margin-top: 2em;
+		font-weight: 700;
+		color: $color-7;
+		
+
+		.no-touch &:hover {
+			border-color: $color-7;
+		}
+	}
+
+	span {
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	@include MQ(M) {
+
+		h2 {
+			font-size: 5rem;
+			font-weight: 300;
+			margin-bottom: .6em;
+		}
+	}
+}
+
+#justin {
+	
+	max-width: 260px;
+	margin: 0 auto;
+
+}
+
+#descriptions {
+	height: 20px;
+	font-size: .8em;
+	max-width: 80%;
+}
+
+.cd-content {
+	background-color: #323232;
+	padding: 3em 0;
+	height: 100vh;
+
+	p {
+		width: 90%;
+		max-width: 800px;
+		margin: 2em auto;
+		line-height: 1.2;
+		color: $color-7;
+		
+	}
+}
+
+.no-js main, .no-js .cd-section {
+	height: auto;
+	overflow: visible;
+}
+
+.no-js .cd-section {
+	position: static;
+	@include transform(translateX(0));
+}
+
+.no-js .cd-nav-container {
+	width: 100%;
+	position: static;
+	@include transform(translateX(0));
+	height: auto;
+	overflow: visible;
+}
+
+.no-js .cd-close-nav {
+	display: none;
+}
+
+.no-js .cd-nav li {
+	@include column(0.5);
+
+	@include MQ(M) {
+		@include column(0.333);
+
+		&:nth-of-type(2n) a {
+			border-right-width: 1px;
+		}
+	}
+
+	@include MQ(L) {
+		@include column(0.1666);
+
+		&:nth-of-type(3n) a {
+			border-right-width: 1px solid $color-3;
+		}
+	}
+}
+
+/*SLIDER STYLES*/
+
+body {
+	background: rgb(191, 76, 76);
+}
+
+/* slider
+----------------------*/
+.slide-wrap {
+  margin: 5% auto 0;
+  width: 100%;
+  float:left; /* important */  
+  position:relative; /* important(so we can absolutely position the description div */  
+}
+.slide-mask {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+.slide-group {
+  position: absolute; 
+  top: 0px; 
+  left: 0;
+  width: 100%;
+}
+.slide {
+  height: 300px;
+}
+
+/* nav
+----------------------*/
+.slide-nav {
+  text-align: center;
+}
+.slide-nav ul {
+	margin-top: 1em;
+	padding: 0;
+}
+/*button styles*/
+.slide-nav li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: $color-1;
+  cursor: pointer;
+  margin-left: .5em;
+  border-radius: 100%;
+}
+.slide-nav li.current {
+	background: $color-7;
+}
+
+
+/**********************LOGIN STYLES*************************/
+
+form {
+	width: 300px;
+	margin: 0 auto;
+	padding: 3em 2em 2em 2em;
+	background: #fafafa;
+	border: 1px solid #ebebeb;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+	position: relative;
+  	transform: translateY(20%);
+
+}
+
+
+.group { 
+	position: relative; 
+	margin-bottom: 45px; 
+}
+
+input {
+	font-size: 18px;
+	padding: 10px 10px 10px 5px;
+	-webkit-appearance: none;
+	display: block;
+	background: #fafafa;
+	color: #636363;
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #757575;
+}
+
+input:focus { outline: none; }
+
+
+/* Label */
+
+label {
+	color: #999; 
+	font-size: 18px;
+	font-weight: normal;
+	position: absolute;
+	pointer-events: none;
+	left: 5px;
+	top: 10px;
+	-webkit-transition:all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+
+/* active */
+
+input:focus ~ label, input.used ~ label {
+	top: -20px;
+  -webkit-transform: scale(.75);
+          transform: scale(.75); left: -2px;
+	/* font-size: 14px; */
+	color: #4a89dc;
+}
+
+
+/* Underline */
+
+.bar {
+	position: relative;
+	display: block;
+	width: 100%;
+}
+
+.bar:before, .bar:after {
+	content: '';
+	height: 2px; 
+	width: 0;
+	bottom: 10px; 
+	position: absolute;
+	background: #4a89dc; 
+	-webkit-transition:all 0.2s ease; 
+	transition: all 0.2s ease;
+}
+
+.bar:before { left: 50%; }
+
+.bar:after { right: 50%; }
+
+
+/* active */
+
+input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
+
+
+/* Highlight */
+
+.highlight {
+	position: absolute;
+	height: 60%; 
+	width: 100px; 
+	top: 25%; 
+	left: 0;
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+
+/* active */
+
+input:focus ~ .highlight {
+	-webkit-animation: inputHighlighter 0.3s ease;
+	        animation: inputHighlighter 0.3s ease;
+}
+
+
+/* Animations */
+
+@-webkit-keyframes inputHighlighter {
+	from { background: #4a89dc; }
+	to 	{ width: 0; background: transparent; }
+}
+
+@keyframes inputHighlighter {
+	from { background: #4a89dc; }
+	to 	{ width: 0; background: transparent; }
+}
+
+.button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 24px;
+  margin: .3em 0 1em 0;
+  width: 100%;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  -webkit-transition:all 0.15s ease;
+  transition: all 0.15s ease;
+}
+.button:focus { outline: 0; }
+
+
+/* Button modifiers */
+
+.buttonBlue {
+  background: $color-2;
+  text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
+}
+
+.buttonBlue:hover { background: rgba(139, 0, 0, 1); }
+
+
+/* Ripples container */
+
+.ripples {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+
+/* Ripples circle */
+
+.ripplesCircle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(153, 0, 0, 1);
+}
+
+.ripples.is-active .ripplesCircle {
+  -webkit-animation: ripples .4s ease-in;
+          animation: ripples .4s ease-in;
+}
+
+
+/* Ripples animation */
+
+@-webkit-keyframes ripples {
+  0% { opacity: 0; }
+
+  25% { opacity: 1; }
+
+  100% {
+    width: 200%;
+    padding-bottom: 200%;
+    opacity: 0;
+  }
+}
+
+@keyframes ripples {
+  0% { opacity: 0; }
+
+  25% { opacity: 1; }
+
+  100% {
+    width: 200%;
+    padding-bottom: 200%;
+    opacity: 0;
+  }
+}
+
+footer { text-align: center; }
+
+footer p {
+	color: #888;
+	font-size: 13px;
+	letter-spacing: .4px;
+}
+
+footer a {
+	color: #4a89dc;
+	text-decoration: none;
+	-webkit-transition:all .2s ease;
+	transition: all .2s ease;
+}
+
+footer a:hover {
+	color: #666;
+	text-decoration: underline;
+}
+
+footer img {
+	width: 80px;
+	-webkit-transition:all .2s ease;
+	transition: all .2s ease;
+}
+
+footer img:hover { opacity: .83; }
+
+footer img:focus , footer a:focus { outline: none; }

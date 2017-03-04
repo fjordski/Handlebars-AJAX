@@ -1,0 +1,31 @@
+
+{{#each apidata}}
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="text-align: left;">{{County}} County</h2>
+        </div>
+        <table id="myTable" class="display hover">
+            <thead>
+            <tr>
+                <th>Assessor Name</th>
+                <th>Assessor Address</th>
+                <th>Assessor Phone</th>
+                <th>Trustee Name</th>
+                <th>Trustee Address</th>
+                <th>Trustee Phone</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{AssessorName}}</td>
+                <td>{{AssessorAddress1}} {{AssessorAddress2}} {{AssessorCity}} {{AssessorState}} {{AssessorZip}}</td>
+                <td>{{AssessorPhone}}</td>
+                <td>{{TrusteeName}}</td>
+                <td>{{TrusteeAddress1}} {{TrusteeAddress2}} {{TrusteeCity}} {{TrusteeState}} {{TrusteeZip}}</td>
+                <td>{{TrusteePhone}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{{/each}}
+
